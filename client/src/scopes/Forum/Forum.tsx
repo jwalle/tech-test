@@ -1,10 +1,11 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import styled from "styled-components";
 import { useAppContext } from "../../contexts/AppContext";
 import Control from "./Control";
 import "./Forum.css";
 import TableRow from "./TableRow";
+import Stats from "./Stats";
 
 const StyledTable = styled.table`
   margin: 1rem auto;
@@ -27,6 +28,14 @@ const StyledTable = styled.table`
 
     thead {
       background-color: #EE486B;
+      th {
+        &:nth-child(2) {
+          cursor: pointer;
+          &:hover {
+    			background-color: rgba(255,255,255,0.3);
+          }
+        }
+      }
     }
 
     tbody {
@@ -38,9 +47,12 @@ const StyledTable = styled.table`
     }
 `
 
+
+
 const Forum = () => {
-  const [scores, setScores] = useState(null)
+  const [scores, setScores] = useState<ScoreProps[] | null>(null)
   const { user } = useAppContext();
+  const [sort, setSort] = useState<'DESC' | 'ASC' | null>(null)
 
   useEffect(() => {
     axios.get('http://localhost:4242/api/score', {
@@ -52,7 +64,12 @@ const Forum = () => {
     })
   }, [])
 
-  // if (!scores) return <p>Loading Content...</p>
+  const sortedScores = (scores: ScoreProps[]): ScoreProps[] => {
+    if (sort) {
+      return scores.sort((a, b) => sort === 'DESC' ? a.kills - b.kills : b.kills - a.kills)
+    }
+    return scores;
+  }
 
   return (
     <div className="Forum">
@@ -62,21 +79,19 @@ const Forum = () => {
           <thead>
             <tr>
               <th>username</th>
-              <th>kills</th>
+              <th onClick={() => setSort(sort === 'DESC' ? 'ASC' : 'DESC')} >
+                kills {sort === 'ASC' && "↑"} {sort === 'DESC' && "↓"}
+              </th>
               <th>date</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
-            {scores?.map((score, index) => <TableRow {...score} setScores={setScores} key={index} />)}
+            {sortedScores(scores)?.map((score, index) => <TableRow {...score} setScores={setScores} key={index} />)}
           </tbody>
         </StyledTable>
       </div>
-      <ul className="stats">
-        <li>The total sum of kills is : 112</li>
-        <li>Lucas as the most kill/game with : 20</li>
-        <li>Clem as the most kills with : 56</li>
-      </ul>
+      <Stats scores={scores} />
     </div>
   );
 }
