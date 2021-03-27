@@ -104,7 +104,7 @@ const Forum = () => {
           </tbody>
         </StyledTable>
       </div>
-      <Stats scores={scores} />
+      {scores && scores.length !== 0 && <Stats scores={scores} />}
     </StyledForum>
   );
 }

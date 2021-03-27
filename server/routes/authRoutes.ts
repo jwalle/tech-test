@@ -9,7 +9,6 @@ const router = express.Router();
 // @desc authenticate an user or create a new one
 // @access Public
 
-//TODO : create and send a token
 router.post("/auth", async (req: Request, res: Response) => {
   try {
     const { username, password } = req.body;

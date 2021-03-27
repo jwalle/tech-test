@@ -1,8 +1,8 @@
 import express from "express";
+import cors from "cors";
 import { authRouter } from "./routes/authRoutes";
 import { jwtAuthenticationMiddleware } from "./routes/routeHelper";
 import { scoreRouter } from "./routes/scoreRoutes";
-import cors from "cors";
 
 const app = express();
 

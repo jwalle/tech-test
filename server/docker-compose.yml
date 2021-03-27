@@ -1,21 +1,21 @@
 services:
-    node-server:
-        build: .
-        command: npm run dev
-        ports:
-            - '4242:4242'
-        volumes:
-            - .:/usr/app
-        environment:
-            - PG_USER=user
-            - PG_PASSWORD=password
+  node-server:
+    build: .
+    command: npm run dev
+    ports:
+      - "4242:4242"
+    volumes:
+      - .:/usr/app
+    environment:
+      - PG_USER=user
+      - PG_PASSWORD=password
 
-    database:
-        image: postgres:13.2-alpine
-        ports:
-            - '5432:5432'
-        environment:
-            - POSTGRES_MODE=primary
-            - POSTGRES_DATABASE=smart
-            - POSTGRES_USER=user
-            - POSTGRES_PASSWORD=password
+  database:
+    image: postgres:13.2-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      #   - POSTGRES_MODE=primary
+      - POSTGRES_DB=smart
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password

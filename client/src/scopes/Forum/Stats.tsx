@@ -35,7 +35,6 @@ const reduceStats = (scores) => scores?.reduce((res, score) => {
 
 const Stats = (props: Props) => {
     const { scores } = props;
-    if (!scores) return null;
     const reducedStats = reduceStats(scores);
     const scoreStats = reducedStats.sort(function (a, b) { return b.kills - a.kills; });
     const killPerGame = reducedStats.sort((a, b) => (b.kpg) - (a.kpg))
@@ -43,7 +42,7 @@ const Stats = (props: Props) => {
         <StyledList>
             <li>The total sum of kills is : {killsSum(scores)}</li>
             <li>{scoreStats[0].username} as the most kills with : {scoreStats[0].kills}</li>
-            <li>{killPerGame[0].username} as the most kills/games  with : {killPerGame[0].kpg}</li>
+            <li>{killPerGame[0].username} as the most kills/games  with : {+parseFloat(killPerGame[0].kpg).toFixed(2)}</li>
         </StyledList>
     );
 }
