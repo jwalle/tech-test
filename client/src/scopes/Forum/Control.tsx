@@ -6,7 +6,7 @@ import { useAppContext } from '../../contexts/AppContext';
 import ScoreInput from './ScoreInput';
 
 interface Props {
-    setScores: Function;
+    setScores: (s: ScoreProps[]) => void;
 }
 
 const StyledForm = styled.form`
