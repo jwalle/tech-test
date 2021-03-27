@@ -13,6 +13,7 @@ const getScores = async () => {
 
   const scores = await Score.findAll({
     include: { model: User, attributes: ["username"] },
+    order: [["createdAt", "DESC"]],
   });
   if (!scores) throw new Error("Score not fetched");
   return scores.map((score: any) => {
