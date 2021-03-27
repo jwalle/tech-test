@@ -32,28 +32,27 @@ function App() {
       </header>
       <Router>
         <Switch>
-          <Route path="/login" component={Login}></Route>
+          <Route path="/login" component={Login} />
           {token && (
             <>
-              <Route path="/forum" component={Forum}></Route>
+              <Route path="/forum" component={Forum} />
             </>
           )}
           <Route path="*" exact>
-            <h1>
-              API:
-              {connected === true && " connected"}
-              {connected === false && " not connected"}
-            </h1>
-            <Link className="login" to="/login">
-              Login
-            </Link>
+            <div style={{ margin: "0 auto", textAlign: "center" }}>
+              <h1>
+                API: {connected ? " connected" : " not connected"}
+              </h1>
+              <Link className="login" to="/login">Login</Link>
+            </div>
           </Route>
         </Switch>
-        <Route path="*" component={TokenHandler}></Route>
+        <Route path="*" component={TokenHandler} />
       </Router>
     </div>
   );
 }
+
 const WrappedApp = () => (
   <AppProvider>
     <App />

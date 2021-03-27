@@ -1,11 +1,11 @@
 .App {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  min-height: 100%;
   width: 100%;
   overflow: hidden;
-  background-color: #CCC;
-  text-align: center;
+  color: #232E59;
+  background: linear-gradient(56deg, #192233, #EE486B);
 }
 
 .App-logo {
@@ -31,13 +31,4 @@
 .login {
   color: white;
   font-size: xx-large;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }

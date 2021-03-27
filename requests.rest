@@ -1,0 +1,43 @@
+GET  http://localhost:4242/hello
+
+###
+
+POST http://localhost:4242/auth
+Content-Type: application/json
+
+{
+    "username": "clem",
+    "password": "coucou" 
+}
+
+
+###
+
+GET http://localhost:4242/api/score
+Authorization: eyJhbGciOiJIUzI1NiJ9.MQ.Guw4zrZfNk327KyS_04fyT_MUgWL3yK1Ms9tc81pWbI
+
+###
+
+POST http://localhost:4242/api/score
+Content-Type: application/json
+
+{
+    "username": "clem",
+    "kills": 22
+}
+
+
+###
+
+PUT http://localhost:4242/api/score/1
+Content-Type: application/json
+
+{
+    "username": "clem",
+    "kills": 20
+}
+
+
+###
+
+DELETE  http://localhost:4242/api/score/1
