@@ -3,7 +3,6 @@ import axios from "axios";
 import styled from "styled-components";
 import { useAppContext } from "../../contexts/AppContext";
 import Control from "./Control";
-import "./Forum.css";
 import TableRow from "./TableRow";
 import Stats from "./Stats";
 
@@ -47,6 +46,20 @@ const StyledTable = styled.table`
     }
 `
 
+const StyledForum = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  .table {
+    flex: 2;
+    @media (min-width: 1200px) { 
+    border-right: 0.5px solid #777;
+  }
+}
+`
+
 
 
 const Forum = () => {
@@ -72,7 +85,7 @@ const Forum = () => {
   }
 
   return (
-    <div className="Forum">
+    <StyledForum>
       <div className="table">
         <Control setScores={setScores} />
         <StyledTable>
@@ -92,7 +105,7 @@ const Forum = () => {
         </StyledTable>
       </div>
       <Stats scores={scores} />
-    </div>
+    </StyledForum>
   );
 }
 

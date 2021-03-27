@@ -4,22 +4,12 @@ import { faEdit, faSave, faTimes, faTrash } from '@fortawesome/free-solid-svg-ic
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAppContext } from '../../contexts/AppContext';
 import axios from 'axios';
-import ScoreInput from './ScoreInput';
 
-interface Props {
-    id: number;
-    kills: number;
-    userId: number;
-    username: string;
-    date: string;
+interface Props extends ScoreProps {
     setScores: Function;
 }
 
-interface StyledRowProps {
-    selfRow: boolean;
-}
-
-const StyledRow = styled.tr<StyledRowProps>`
+const StyledRow = styled.tr<{ selfRow: boolean }>`
     td {
         color: ${(props) => (props.selfRow ? '#fff' : "#232E59")};
         background-color: ${(props) => (props.selfRow && "rgba(255,255,255,0.3)")};
@@ -47,6 +37,7 @@ const StyledTableData = styled.td`
 const TableRow = (props: Props): JSX.Element => {
     const { user } = useAppContext();
     const [edit, setEdit] = useState(null)
+    const [score, setScore] = useState(null)
     const selfRow = props.userId === user.userId;
 
     const handleDelete = (scoreId: number) => {
@@ -64,7 +55,6 @@ const TableRow = (props: Props): JSX.Element => {
     }
 
     const handleSave = (scoreId: number) => {
-        // preventDefault();
         if (scoreId && selfRow && edit) {
             axios(`http://localhost:4242/api/score/${scoreId}`, {
                 method: 'PUT',
