@@ -13,26 +13,20 @@ const StyledTable = styled.table`
     th,td {
       padding: 15px;
       background-color: rgba(255,255,255,0.2);
-      color: white;
-      width: 120px;
+      width: 140px;
       text-align: center;
       background-color: none;
       &:last-child {
-          width: 40px;
+          width: 70px;
+          div {
+            display: flex;
+            justify-content: space-around;
+          }
         }
-    }
-
-    td {
-      color: #232E59;
-      font-weight: 600;
     }
 
     thead {
       background-color: #EE486B;
-
-      th {
-
-      }
     }
 
     tbody {
@@ -46,12 +40,12 @@ const StyledTable = styled.table`
 
 const Forum = () => {
   const [scores, setScores] = useState(null)
-  const { token } = useAppContext();
+  const { user } = useAppContext();
 
   useEffect(() => {
     axios.get('http://localhost:4242/api/score', {
       headers: {
-        "Authorization": token,
+        "Authorization": user.token,
       }
     }).then((res) => {
       setScores(res.data)
@@ -63,7 +57,7 @@ const Forum = () => {
   return (
     <div className="Forum">
       <div className="table">
-        <Control />
+        <Control setScores={setScores} />
         <StyledTable>
           <thead>
             <tr>
@@ -74,7 +68,7 @@ const Forum = () => {
             </tr>
           </thead>
           <tbody>
-            {scores?.map((score, index) => <TableRow {...score} key={index} />)}
+            {scores?.map((score, index) => <TableRow {...score} setScores={setScores} key={index} />)}
           </tbody>
         </StyledTable>
       </div>

@@ -1,8 +1,13 @@
+import axios from 'axios';
 import React from 'react';
 import styled from 'styled-components';
 import Button from '../../components/Button';
+import { useAppContext } from '../../contexts/AppContext';
 import ScoreInput from './ScoreInput';
 
+interface Props {
+    setScores: Function;
+}
 
 const StyledForm = styled.form`
     display: flex;
@@ -11,10 +16,25 @@ const StyledForm = styled.form`
     align-items: center;
 `;
 
-const Control = (): JSX.Element => {
+const Control = ({ setScores }: Props): JSX.Element => {
+    const { user } = useAppContext();
     const submitScore = (e) => {
         e.preventDefault();
-        e.target[0].value = null;
+        const kills = e?.target['score']?.value;
+        if (kills === null) return;
+        axios('http://localhost:4242/api/score', {
+            method: 'POST',
+            headers: {
+                Authorization: user.token,
+            },
+            data: {
+                kills
+            }
+        }
+        ).then((response) => {
+            setScores(response.data)
+            e.target[0].value = null;
+        }).catch(e => console.log("ERROR: ", e))
     }
 
     return (

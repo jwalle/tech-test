@@ -54,7 +54,7 @@ router.post("/api/score", async (req: Request, res: Response) => {
     });
     if (!newScore) throw new Error("error creating score");
 
-    const scores = await Score.findAll();
+    const scores = await getScores();
     res.status(200).send(scores);
   } catch (e) {
     console.log(e);
@@ -77,7 +77,7 @@ router.put("/api/score/:id", async (req: Request, res: Response) => {
     );
     if (!updateScore) throw new Error("error updating score");
 
-    const scores = await Score.findAll();
+    const scores = await getScores();
     res.status(200).send(scores);
   } catch (e) {
     console.log(e);
@@ -98,7 +98,7 @@ router.delete("/api/score/:id", async (req: Request, res: Response) => {
     });
     if (!destroyScore) throw new Error("error destroying score");
 
-    const scores = await Score.findAll();
+    const scores = await getScores();
     res.status(200).send(scores);
   } catch (e) {
     console.log(e);

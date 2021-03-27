@@ -4,17 +4,18 @@ import { useLocation } from "react-router";
 import { useAppContext } from "../../contexts/AppContext";
 
 export default function TokenHandler() {
-  const { token, setToken } = useAppContext();
+  const { user, setUser } = useAppContext();
   const location = useLocation();
 
-  if (token) {
+  if (user.token) {
     return null;
   }
 
   const matchedToken = /(?:\?|&)token=([^=&]*)(?:&?)/gi.exec(location.search);
+  const matchedUser = /(?:\?|&)user=([^=&]*)(?:&?)/gi.exec(location.search);
 
-  if (matchedToken && matchedToken[1]) {
-    setToken(matchedToken[1]);
+  if (matchedToken && matchedToken[1] && matchedUser && matchedUser[1]) {
+    setUser({ token: matchedToken[1], userId: parseInt(matchedUser[1]) });
   }
 
   return null;

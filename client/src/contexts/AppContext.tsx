@@ -8,32 +8,32 @@ type Actions<T> = {
 };
 
 interface IAppState {
-  token: string | null;
-  userId: number | null;
+  user: {
+    token: string | null;
+    userId: number | null;
+  }
 }
 
 interface IAppContext {
-  setToken: (string) => void;
-  setUserId: (number) => void;
+  setUser: ({ token: string, userId: number }) => void;
 }
 
 const initialState: IAppState = {
-  token: null,
-  userId: null,
+  user: {
+    token: null,
+    userId: null,
+  }
 };
 
 const AppContext = createContext<IAppState & IAppContext>({
   ...initialState,
-  setToken: () => { },
-  setUserId: () => { },
+  setUser: () => { },
 });
 
 export const AppReducer = (state: IAppState, action: Actions<ActionTypes>) => {
   switch (action.type) {
-    case ActionTypes.SET_TOKEN:
-      return { ...state, token: action?.payload };
-    case ActionTypes.SET_USER_ID:
-      return { ...state, userId: action?.payload };
+    case ActionTypes.SET_USER:
+      return { ...state, user: action?.payload };
     default:
       return state;
   }
@@ -46,13 +46,9 @@ export const AppProvider = ({ children }: { children: JSX.Element }) => {
     <AppContext.Provider
       value={{
         ...state,
-        setToken: (token) =>
+        setUser: (token) =>
           setImmediate(() =>
-            dispatch({ type: ActionTypes.SET_TOKEN, payload: token })
-          ),
-        setUserId: (userId) =>
-          setImmediate(() =>
-            dispatch({ type: ActionTypes.SET_USER_ID, payload: userId })
+            dispatch({ type: ActionTypes.SET_USER, payload: token })
           ),
       }}
     >

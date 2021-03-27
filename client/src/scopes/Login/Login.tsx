@@ -16,7 +16,7 @@ const StyledLogin = styled.div`
 
 export default function Login() {
   const history = useHistory();
-  const { setUserId, setToken } = useAppContext();
+  const { setUser } = useAppContext();
 
   return (
     <StyledLogin>
@@ -32,9 +32,8 @@ export default function Login() {
             username,
             password,
           }).then((res) => {
-            setToken(res.data.token)
-            setUserId(res.data.userId)
-            history.push("/forum?token=" + res.data.token);
+            setUser(res.data)
+            history.push("/forum?token=" + res.data.token + '&user=' + res.data.userId);
           }) //TODO: catch ERROR
         }}
       >

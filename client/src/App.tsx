@@ -13,7 +13,7 @@ type nullableBoolean = boolean | null;
 
 function App() {
   const [connected, setConnected] = useState<nullableBoolean>(null);
-  const { token, setToken } = useAppContext();
+  const { user } = useAppContext();
 
   useEffect(() => {
     fetch("http://localhost:4242/hello")
@@ -33,7 +33,7 @@ function App() {
       <Router>
         <Switch>
           <Route path="/login" component={Login} />
-          {token && (
+          {user.token && (
             <>
               <Route path="/forum" component={Forum} />
             </>
