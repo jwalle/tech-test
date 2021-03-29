@@ -6,6 +6,7 @@ services:
       - "4242:4242"
     volumes:
       - .:/usr/app
+      - /usr/app/node_modules
     environment:
       - PG_USER=user
       - PG_PASSWORD=password
@@ -15,7 +16,6 @@ services:
     ports:
       - "5432:5432"
     environment:
-      #   - POSTGRES_MODE=primary
       - POSTGRES_DB=smart
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=password
